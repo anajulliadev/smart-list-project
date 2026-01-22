@@ -1,11 +1,9 @@
-import { ComponentExample } from "../components/component-example";
-import { ModeToggle } from "../components/mode-toggle";
+import Header from "../components/header";
 
 export default function Page() {
   return (
     <div>
-      <ModeToggle />
-      <ComponentExample />
+      <Header />
     </div>
   );
 }
