@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { Card, CardContent, CardTitle } from "../ui/card";
 import { HandCoins, ListTodo, SquarePen } from "lucide-react";
+import { formatedTotal } from "@/src/helpers/formated-data";
 
 type StatsCardsProps = {
   remindersCount: number;
@@ -13,14 +14,6 @@ export function StatsCards({
   itemsCount,
   total,
 }: StatsCardsProps) {
-  //pra formatar em br
-  const formatedTotal = useMemo(() => {
-    return total.toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    });
-  }, [total]);
-
   return (
     <div className="grid grid-cols-1 gap-3 sm:gap-6 sm:grid-cols-3  w-full sm:max-w-4xl  px-10">
       <Card className="p-4">
@@ -44,7 +37,7 @@ export function StatsCards({
           <HandCoins size={18} /> Total Estimado
         </CardTitle>
         <CardContent className="flex justify-center items-center font-bold text-xl">
-          {formatedTotal}
+          {formatedTotal(total)}
         </CardContent>
       </Card>
     </div>
