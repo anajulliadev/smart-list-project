@@ -1,39 +1,17 @@
+"use client";
+
 import { ShoppingCart, Trash2 } from "lucide-react";
 import { Card, CardContent, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
 import { formatedTotal } from "@/src/helpers/formated-data";
 import { Input } from "../ui/input";
-
-type mockListProps = {
-  id: number;
-  text: string;
-  unityPrice?: number;
-  quantity?: number;
-  totalPrice?: number;
-};
-
-const mockList: mockListProps[] = [
-  {
-    id: 1,
-    text: "Comprar leite",
-    unityPrice: 4.5,
-    quantity: 2,
-  },
-  {
-    id: 2,
-    text: "Comprar pão",
-    unityPrice: 3.0,
-    quantity: 1,
-  },
-  {
-    id: 3,
-    text: "Comprar ovos",
-    unityPrice: 12.0,
-    quantity: 1,
-  },
-];
+import { useListStore } from "@/src/store/list-store";
 
 export function ShoppingListPanel() {
+  const items = useListStore((s) => s.items);
+  const removeItem = useListStore((s) => s.removeItem);
+  const updateItem = useListStore((s) => s.updateItem);
+
   return (
     <Card>
       {/* titulo e o input com o botao de mais */}
@@ -42,7 +20,7 @@ export function ShoppingListPanel() {
       </CardTitle>
       <CardContent>
         <ul>
-          {mockList.map((item) => {
+          {items.map((item, index) => {
             const total = (item.unityPrice ?? 0) * (item.quantity ?? 0);
 
             return (
@@ -50,12 +28,15 @@ export function ShoppingListPanel() {
                 <div className="flex justify-between">
                   <div>
                     <p className="font-medium text-sm text-gray-600">
-                      Item {item.id}
+                      Item {index + 1}
                     </p>
                     <p className="font-bold py-2">{item.text}</p>
                   </div>
                   <div className="flex items-center ">
-                    <Button variant={"destructive"}>
+                    <Button
+                      variant={"destructive"}
+                      onClick={() => removeItem(item.id)}
+                    >
                       <Trash2 />
                     </Button>
                   </div>
@@ -68,7 +49,15 @@ export function ShoppingListPanel() {
                       type="number"
                       min={1}
                       step={1}
-                      defaultValue={item.quantity ?? 0}
+                      value={item.quantity ?? 1}
+                      onChange={(e) =>
+                        updateItem(item.id, {
+                          quantity: Math.max(
+                            1,
+                            parseInt(e.target.value || "1", 10),
+                          ),
+                        })
+                      }
                     />
                   </div>
                   <div className="w-full">
@@ -76,9 +65,17 @@ export function ShoppingListPanel() {
 
                     <Input
                       type="number"
-                      min={1}
-                      step={1}
-                      defaultValue={item.unityPrice ?? 0}
+                      min={0}
+                      step={0.01}
+                      value={item.unityPrice ?? 0}
+                      onChange={(e) =>
+                        updateItem(item.id, {
+                          unityPrice: Math.max(
+                            0,
+                            parseFloat(e.target.value ?? "0"),
+                          ),
+                        })
+                      }
                     />
                   </div>
                   <div className="w-full">
