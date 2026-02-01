@@ -17,7 +17,7 @@ export default function Header() {
         <p className="font-medium">Sua lista de compras rápida e prática</p>
       </div>
       {/* cards de estatisticas basicas */}
-      <StatsCards itemsCount={2} total={2} remindersCount={2} />
+      <StatsCards />
       <Separator className="max-w-5xl" />
     </div>
   );
