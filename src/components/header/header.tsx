@@ -1,6 +1,7 @@
 import { ShoppingCart } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
-import { Separator } from "./ui/separator";
+import { Separator } from "../ui/separator";
+import { StatsCards } from "./stats-cards";
 
 export default function Header() {
   return (
@@ -15,6 +16,8 @@ export default function Header() {
       <div>
         <p className="font-medium">Sua lista de compras rápida e prática</p>
       </div>
+      {/* cards de estatisticas basicas */}
+      <StatsCards itemsCount={2} total={2} remindersCount={2} />
       <Separator className="max-w-5xl" />
     </div>
   );
