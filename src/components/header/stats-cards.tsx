@@ -36,7 +36,7 @@ export function StatsCards() {
           <ListTodo size={18} /> Itens da Lista
         </CardTitle>
         <CardContent className="flex justify-center items-center font-bold text-xl">
-          {remindersCount}
+          {itemsCount}
         </CardContent>
       </Card>
       <Card className="p-4">
