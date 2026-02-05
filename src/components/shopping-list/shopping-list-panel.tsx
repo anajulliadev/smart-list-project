@@ -6,11 +6,13 @@ import { Button } from "../ui/button";
 import { formatedTotal } from "@/src/helpers/formated-data";
 import { Input } from "../ui/input";
 import { useListStore } from "@/src/store/list-store";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export function ShoppingListPanel() {
   const items = useListStore((s) => s.items);
   const removeItem = useListStore((s) => s.removeItem);
   const updateItem = useListStore((s) => s.updateItem);
+  const checkedItem = useListStore((s) => s.checkedItem);
 
   return (
     <Card>
@@ -33,6 +35,13 @@ export function ShoppingListPanel() {
                     <p className="font-bold py-2">{item.text}</p>
                   </div>
                   <div className="flex items-center ">
+                    <div className="mr-2 p-2 border rounded-md">
+                      <Checkbox
+                        checked={item.checked}
+                        onClick={() => checkedItem(item.id)}
+                      />
+                    </div>
+
                     <Button
                       variant={"destructive"}
                       onClick={() => removeItem(item.id)}
