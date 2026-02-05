@@ -12,6 +12,7 @@ type ListState = {
   updateItem: (id: number, data: Partial<ShoppingItem>) => void;
 
   addItemFromReminder: (reminderId: number) => void;
+  checkedItem: (id: number) => void;
 };
 
 export const useListStore = create<ListState>()(
@@ -60,6 +61,14 @@ export const useListStore = create<ListState>()(
         set((state) => ({
           items: [...state.items, newItem],
           reminders: state.reminders.filter((r) => r.id !== reminderId),
+        }));
+      },
+
+      checkedItem(id: number) {
+        set((state) => ({
+          items: state.items.map((item) =>
+            item.id === id ? { ...item, checked: !item.checked } : item,
+          ),
         }));
       },
     }),

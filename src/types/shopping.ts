@@ -3,6 +3,7 @@ export type ShoppingItem = {
   text: string;
   unityPrice?: number;
   quantity?: number;
+  checked?: boolean;
 };
 
 export type Reminder = {
